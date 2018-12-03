@@ -1,9 +1,21 @@
+import string
+
+
 def get_input():
     return open("input_day02.txt").read()
 
 
 def part1(puzzle):
-    pass
+    two = sum(any_letter_n_times(x, 2) for x in puzzle.splitlines())
+    three = sum(any_letter_n_times(x, 3) for x in puzzle.splitlines())
+    return two * three
+
+
+def any_letter_n_times(x, n):
+    for l in string.ascii_lowercase:
+        if x.count(l) == n:
+            return 1
+    return 0
 
 
 def part2(puzzle):
