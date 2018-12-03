@@ -1,4 +1,5 @@
 import string
+from itertools import combinations
 
 
 def get_input():
@@ -19,7 +20,25 @@ def any_letter_n_times(x, n):
 
 
 def part2(puzzle):
-    pass
+    x, y = find_almost_identical_ids(puzzle.splitlines())
+    return get_intersection(x, y)
+
+
+def differs_by_one_char(x, y):
+    assert len(x) == len(y)
+    n = sum(a != b for a, b in zip(x, y))
+    return n == 1
+
+
+def find_almost_identical_ids(ids):
+    for x, y in combinations(ids, 2):
+        if differs_by_one_char(x, y):
+            return x, y
+
+
+def get_intersection(x, y):
+    assert len(x) == len(y)
+    return ''.join(a for a, b in zip(x, y) if a == b)
 
 
 if __name__ == "__main__":
