@@ -13,6 +13,7 @@ def part2(puzzle):
             floor += 1
         else:
             floor -= 1
+
         if floor < 0:
             return i + 1
 

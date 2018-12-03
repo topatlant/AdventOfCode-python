@@ -1,0 +1,30 @@
+def get_input():
+    return open("input_day02.txt").read()
+
+
+def part1(puzzle):
+    s = 0
+    for present in puzzle.splitlines():
+        l, w, h = (int(x) for x in present.split("x"))
+        faces = (l * w, l * h, w * h)
+        result = 2 * sum(faces) + min(faces)
+        s += result
+    return s
+
+
+def part2(puzzle):
+    s = 0
+    for present in puzzle.splitlines():
+        sides = [int(x) for x in present.split("x")]
+        sides.sort()
+        length = 2 * (sides[0] + sides[1])
+        volume = sides[0] * sides[1] * sides[2]
+        result = length + volume
+        s += result
+    return s
+
+
+if __name__ == "__main__":
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
