@@ -29,10 +29,12 @@ def part1(puzzle):
     return result
 
 
+# todo refactor
 def part2(puzzle):
     x = 0
     y = 0
     visited = [(0, 0)]
+
     # Santa
     for letter in puzzle[::2]:
         x, y = move(x, y, letter)

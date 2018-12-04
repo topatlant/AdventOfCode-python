@@ -3,11 +3,11 @@ def get_input():
 
 
 def part1(puzzle):
-    return sum(1 for x in puzzle.splitlines() if is_nice_part1(x))
+    return sum(is_nice_part1(x) for x in puzzle.splitlines())
 
 
 def part2(puzzle):
-    return sum(1 for x in puzzle.splitlines() if is_nice_part2(x))
+    return sum(is_nice_part2(x) for x in puzzle.splitlines())
 
 
 def is_nice_part1(x):
