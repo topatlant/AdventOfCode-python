@@ -17,38 +17,25 @@ def move(x, y, letter):
     return x, y
 
 
+def get_visited_spots(directions):
+    x = 0
+    y = 0
+    visited = [(0, 0)]
+    for letter in directions:
+        x, y = move(x, y, letter)
+        visited.append((x, y))
+    return visited
+
+
 def part1(puzzle):
-    x = 0
-    y = 0
-    visited = [(0, 0)]
-    for letter in puzzle:
-        x, y = move(x, y, letter)
-        visited.append((x, y))
-
-    result = len(set(visited))
-    return result
+    return len(set(get_visited_spots(puzzle)))
 
 
-# todo refactor
 def part2(puzzle):
-    x = 0
-    y = 0
-    visited = [(0, 0)]
+    santa = get_visited_spots(puzzle[::2])
+    robo_santa = get_visited_spots(puzzle[1::2])
 
-    # Santa
-    for letter in puzzle[::2]:
-        x, y = move(x, y, letter)
-        visited.append((x, y))
-
-    # Robo Santa
-    x = 0
-    y = 0
-    for letter in puzzle[1::2]:
-        x, y = move(x, y, letter)
-        visited.append((x, y))
-
-    result = len(set(visited))
-    return result
+    return len(set(santa + robo_santa))
 
 
 if __name__ == "__main__":
