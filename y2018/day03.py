@@ -20,7 +20,7 @@ def parse_claims(i):
         id, at, start, dimensions = line.split()
         assert at == "@"
         assert id.startswith("#")
-        id = id[1:]
+        id = int(id[1:])
 
         x1, y1 = map(int, start[:-1].split(","))
         dx, dy = map(int, dimensions.split("x"))
@@ -45,8 +45,17 @@ def part1(grid):
 
 
 def part2(grid, claims):
-    pass
-    # todo
+    # find the claim whose complete area is 1 in the grid
+    for id, c in claims.items():
+        if is_non_overlapping(c, grid):
+            return id
+
+
+def is_non_overlapping(c, grid):
+    for i, j in square_iterator(*c):
+        if grid[i][j] != 1:
+            return False
+    return True
 
 
 def main_method():

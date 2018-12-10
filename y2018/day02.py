@@ -1,4 +1,3 @@
-import string
 from itertools import combinations
 
 
@@ -13,7 +12,7 @@ def part1(puzzle):
 
 
 def any_letter_n_times(x, n):
-    for l in string.ascii_lowercase:
+    for l in x:
         if x.count(l) == n:
             return 1
     return 0
