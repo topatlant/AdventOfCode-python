@@ -7,6 +7,6 @@ def test_part1():
         assert part1(tc[0]) == tc[1]
 
 # todo
-#def test_part2():
-#    assert part2("R8, R4, R4, R8") == 4
+def test_part2():
+    assert part2("R8, R4, R4, R8") == 4
 
