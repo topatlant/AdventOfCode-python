@@ -7,7 +7,6 @@ def part1(puzzle):
 
 
 def part2(puzzle):
-
     def find_duplicate_frequency(start_freq):
         f = start_freq
         for line in puzzle.splitlines():

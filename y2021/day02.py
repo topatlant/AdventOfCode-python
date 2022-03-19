@@ -5,7 +5,9 @@ def get_input():
 def part1(puzzle):
     instructions = [x.split() for x in puzzle.splitlines()]
     forward = sum(int(d) for i, d in instructions if i == "forward")
-    depth = sum(int(d) for i, d in instructions if i == "down") - sum(int(d) for i, d in instructions if i == "up")
+    depth = sum(int(d) for i, d in instructions if i == "down") - sum(
+        int(d) for i, d in instructions if i == "up"
+    )
     return forward * depth
 
 

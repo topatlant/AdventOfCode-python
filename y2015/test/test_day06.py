@@ -11,9 +11,11 @@ def test_part1():
     l1, l2 = fill_lights("turn off 499,499 through 500,500")
     assert part1(l1) == 0
 
-    l1, l2 = fill_lights("""turn on 0,0 through 999,999
+    l1, l2 = fill_lights(
+        """turn on 0,0 through 999,999
 toggle 0,0 through 999,0
-turn off 499,499 through 500,500""")
+turn off 499,499 through 500,500"""
+    )
     assert part1(l1) == 998996
 
 

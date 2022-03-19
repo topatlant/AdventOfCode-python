@@ -9,7 +9,7 @@ def hash_with_n_leading_spaces(x, n):
     i = 1
 
     while True:
-        result = hashlib.md5((x + str(i)).encode('ascii')).hexdigest()
+        result = hashlib.md5((x + str(i)).encode("ascii")).hexdigest()
         if result.startswith("0" * n):
             return i
 

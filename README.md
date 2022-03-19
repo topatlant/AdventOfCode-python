@@ -1,4 +1,5 @@
 # AdventOfCode-python
+
 Solutions to some of the Advent of Code puzzles, written in Python, incl. tests
 
 Emphasis was on writing elegant, pythonic code - not speed, optimisation or conciseness.

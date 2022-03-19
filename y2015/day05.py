@@ -11,7 +11,11 @@ def part2(puzzle):
 
 
 def is_nice_part1(x):
-    return has_at_least_three_vowels(x) and has_double_letter(x) and not contains_bad_string(x)
+    return (
+        has_at_least_three_vowels(x)
+        and has_double_letter(x)
+        and not contains_bad_string(x)
+    )
 
 
 def is_nice_part2(x):
@@ -43,7 +47,7 @@ def contains_bad_string(x):
 
 def contains_double_pair(x):
     for i in range(len(x) - 1):
-        pair = x[i:i + 2]
+        pair = x[i : i + 2]
         if x.count(pair) >= 2:
             return True
     return False

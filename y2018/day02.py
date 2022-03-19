@@ -37,7 +37,7 @@ def find_almost_identical_ids(ids):
 
 def get_intersection(x, y):
     assert len(x) == len(y)
-    return ''.join(a for a, b in zip(x, y) if a == b)
+    return "".join(a for a, b in zip(x, y) if a == b)
 
 
 if __name__ == "__main__":
