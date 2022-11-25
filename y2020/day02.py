@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-data = open("input_day02.txt").readlines()
-
 
 @dataclass
 class Policy:
@@ -10,13 +8,30 @@ class Policy:
     n2: int
 
 
+def get_input():
+    return open("inputs/02.txt").readlines()
+
+
+def main():
+    counter1 = counter2 = 0
+    for line in get_input():
+        password, policy = parse_pw_policy(line)
+        if conforms_part1(password, policy):
+            counter1 += 1
+        if conforms_part2(password, policy):
+            counter2 += 1
+
+    print(f"Part1 policy: {counter1} valid passwords")
+    print(f"Part2 policy: {counter2} valid passwords")
+
+
 def parse_pw_policy(line):
     pol, pw = line.strip().split(":")
     pw = pw.strip()
     minmax, letter = pol.split()
     letter = letter.strip()
-    min, max = minmax.split('-')
-    return pw, Policy(letter, int(min), int(max))
+    minimum, maximum = minmax.split("-")
+    return pw, Policy(letter, int(minimum), int(maximum))
 
 
 def conforms_part1(pw: str, p: Policy):
@@ -30,13 +45,5 @@ def conforms_part2(pw: str, p: Policy):
     return letter_1_correct != letter_2_correct
 
 
-counter1 = counter2 = 0
-for line in data:
-    password, policy = parse_pw_policy(line)
-    if conforms_part1(password, policy):
-        counter1 += 1
-    if conforms_part2(password, policy):
-        counter2 += 1
-
-print(f"Part1 policy: {counter1} valid passwords")
-print(f"Part2 policy: {counter2} valid passwords")
+if __name__ == "__main__":
+    main()
