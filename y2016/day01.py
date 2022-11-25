@@ -1,5 +1,5 @@
 def get_input():
-    return open("input_day01.txt").read()
+    return open("inputs/01.txt").read()
 
 
 def walk(directions):

@@ -1,5 +1,5 @@
 def get_input():
-    return open("input_day05.txt").read()
+    return open("inputs/05.txt").read()
 
 
 def part1(puzzle):

@@ -1,20 +1,18 @@
 def get_input():
-    return open("input_day03.txt").read()
+    return open("inputs/03.txt").read()
 
 
 def move(x, y, letter):
     if letter == "<":
-        x -= 1
-    elif letter == ">":
-        x += 1
-    elif letter == "^":
-        y += 1
-    elif letter == "v":
-        y -= 1
-    else:
-        raise Exception("unknown direction")
+        return x - 1, y
+    if letter == ">":
+        return x + 1, y
+    if letter == "^":
+        return x, y + 1
+    if letter == "v":
+        return x, y - 1
 
-    return x, y
+    raise Exception("unknown direction")
 
 
 def get_visited_spots(directions):

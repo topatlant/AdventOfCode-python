@@ -1,5 +1,5 @@
 def get_input():
-    return open("input_day03.txt").read()
+    return open("inputs/03.txt").read()
 
 
 def fill_grid(puzzle):
