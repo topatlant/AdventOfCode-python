@@ -16,6 +16,5 @@ def test_part1():
     assert part1(puzzle) == 7
 
 
-
 # def test_part2():
 #    assert sum(conforms_part2(*parse_pw_policy(line)) for line in puzzle) == 1
