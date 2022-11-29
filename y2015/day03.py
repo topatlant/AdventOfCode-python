@@ -1,5 +1,6 @@
 def get_input():
-    return open("inputs/03.txt").read()
+    with open("inputs/03.txt") as f:
+        return f.read()
 
 
 def move(x, y, letter):

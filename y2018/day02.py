@@ -2,7 +2,8 @@ from itertools import combinations
 
 
 def get_input():
-    return open("inputs/02.txt").read()
+    with open("inputs/02.txt") as f:
+        return f.read()
 
 
 def part1(puzzle):

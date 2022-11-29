@@ -2,7 +2,8 @@ import itertools
 
 
 def get_input():
-    data = open("inputs/01.txt").readlines()
+    with open("inputs/01.txt") as f:
+        data = f.readlines()
     return [int(d) for d in data]
 
 

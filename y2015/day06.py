@@ -1,5 +1,6 @@
 def get_input():
-    return open("inputs/06.txt").read()
+    with open("inputs/06.txt") as f:
+        return f.read()
 
 
 def get_square_iterator(x1, y1, x2, y2):

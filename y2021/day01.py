@@ -2,7 +2,8 @@ from itertools import tee
 
 
 def get_input():
-    return open("inputs/01.txt").read()
+    with open("inputs/01.txt") as f:
+        return f.read()
 
 
 def pairwise(iterable):
