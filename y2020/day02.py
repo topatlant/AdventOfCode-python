@@ -8,7 +8,7 @@ class Policy:
     n2: int
 
 
-def get_input():
+def get_input() -> list[str]:
     with open("inputs/02.txt") as f:
         return f.readlines()
 
@@ -26,7 +26,7 @@ def main():
     print(f"Part2 policy: {counter2} valid passwords")
 
 
-def parse_pw_policy(line):
+def parse_pw_policy(line) -> tuple[str, Policy]:
     pol, pw = line.strip().split(":")
     pw = pw.strip()
     minmax, letter = pol.split()

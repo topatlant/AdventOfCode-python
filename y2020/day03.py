@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_input():
+def get_input() -> list[str]:
     with open("inputs/03.txt") as f:
         return [line.strip() for line in f]
 
@@ -26,7 +26,7 @@ def part2(puzzle):
     return res
 
 
-def parse(puzzle):
+def parse(puzzle) -> np.ndarray:
     height = len(puzzle)
     width = len(puzzle[0])
     grid = np.zeros([height, width], dtype=bool)
@@ -39,7 +39,7 @@ def parse(puzzle):
     return grid
 
 
-def traverse(grid, slope):
+def traverse(grid: np.ndarray, slope: tuple[int]):
     x = y = 0
     while x < grid.shape[0]:
         yield grid[x, y]

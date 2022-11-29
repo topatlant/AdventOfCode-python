@@ -1,7 +1,7 @@
 import itertools
 
 
-def get_input():
+def get_input() -> list[int]:
     with open("inputs/01.txt") as f:
         data = f.readlines()
     return [int(d) for d in data]

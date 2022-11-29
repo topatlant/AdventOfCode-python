@@ -40,7 +40,7 @@ def split_by_blanks(lines: list[str]) -> list[list[str]]:
         while lines:
             index = lines.index("")
             res.append(lines[:index])
-            lines = lines[index + 1:]
+            lines = lines[index + 1 :]
     except ValueError:  # last group found
         res.append(lines)
 
@@ -61,8 +61,7 @@ def get_tokens(p: list[str]):
 
 
 def is_valid(p: Passport) -> bool:
-    for a in ("byr", "iyr", "eyr",
-              "hgt", "hcl", "ecl", "pid"):  # , "cid"):
+    for a in ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"):  # , "cid"):
         if not getattr(p, a):
             return False
     return True
