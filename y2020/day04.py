@@ -4,7 +4,7 @@ import re
 
 def get_input():
     with open("inputs/04.txt") as f:
-        return [line.strip() for line in f.readlines()]
+        return [line.strip() for line in f]
 
 
 def main():
