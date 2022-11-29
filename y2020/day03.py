@@ -2,24 +2,12 @@ import numpy as np
 
 
 def get_input():
-    return open("inputs/03.txt").readlines()
+    with open("inputs/03.txt") as f:
+        return [line.strip() for line in f]
 
 
 def main():
-    puzzle = """..##.......
-#...#...#..
-.#....#..#.
-..#.#...#.#
-.#...##..#.
-..#.##.....
-.#.#.#....#
-.#........#
-#.##...#...
-#...##....#
-.#..#...#.#""".splitlines()
-    res = part1(puzzle)
-    print(res)
-    #print("Part1:", part1(get_input()))
+    print("Part1:", part1(get_input()))
 
 
 def part1(puzzle):
