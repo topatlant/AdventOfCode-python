@@ -49,31 +49,23 @@ class Passport:
 
     @staticmethod
     def validate_byr(year: str):
-        if len(year) != 4:
-            return False
-        try:
-            y = int(year)
-            return 1920 <= y <= 2002
-        except ValueError:
-            return False
+        return Passport.validate_year(year, 1920, 2002)
 
     @staticmethod
     def validate_iyr(year: str):
-        if len(year) != 4:
-            return False
-        try:
-            y = int(year)
-            return 2010 <= y <= 2020
-        except ValueError:
-            return False
+        return Passport.validate_year(year, 2010, 2020)
 
     @staticmethod
     def validate_eyr(year: str):
+        return Passport.validate_year(year, 2020, 2030)
+
+    @staticmethod
+    def validate_year(year: str, lowest: int, highest: int) -> bool:
         if len(year) != 4:
             return False
         try:
             y = int(year)
-            return 2020 <= y <= 2030
+            return lowest <= y <= highest
         except ValueError:
             return False
 
