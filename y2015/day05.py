@@ -3,6 +3,11 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
 def part1(puzzle):
     return sum(is_nice_part1(x) for x in puzzle.splitlines())
 
@@ -62,5 +67,4 @@ def contains_repeating_letter_with_gap(x):
 
 
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()

@@ -3,6 +3,20 @@ def get_input():
         return f.read()
 
 
+def main():
+    l1, l2 = fill_lights(get_input())
+    print("Part 1:", part1(l1))
+    print("Part 2:", part2(l2))
+
+
+def part1(lights):
+    return sum(line.count(True) for line in lights)
+
+
+def part2(lights):
+    return sum(sum(line) for line in lights)
+
+
 def get_square_iterator(x1, y1, x2, y2):
     return ((i, j) for i in range(x1, x2 + 1) for j in range(y1, y2 + 1))
 
@@ -49,19 +63,5 @@ def fill_lights(puzzle):
     return lights1, lights2
 
 
-def part1(lights):
-    return sum(line.count(True) for line in lights)
-
-
-def part2(lights):
-    return sum(sum(line) for line in lights)
-
-
-def main_method():
-    l1, l2 = fill_lights(get_input())
-    print("Part 1:", part1(l1))
-    print("Part 2:", part2(l2))
-
-
 if __name__ == "__main__":
-    main_method()
+    main()

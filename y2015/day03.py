@@ -3,6 +3,22 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
+def part1(puzzle):
+    return len(set(get_visited_spots(puzzle)))
+
+
+def part2(puzzle):
+    santa = get_visited_spots(puzzle[::2])
+    robo_santa = get_visited_spots(puzzle[1::2])
+
+    return len(set(santa + robo_santa))
+
+
 def move(x, y, letter):
     if letter == "<":
         return x - 1, y
@@ -26,17 +42,5 @@ def get_visited_spots(directions):
     return visited
 
 
-def part1(puzzle):
-    return len(set(get_visited_spots(puzzle)))
-
-
-def part2(puzzle):
-    santa = get_visited_spots(puzzle[::2])
-    robo_santa = get_visited_spots(puzzle[1::2])
-
-    return len(set(santa + robo_santa))
-
-
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()

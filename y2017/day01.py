@@ -7,17 +7,6 @@ def main():
     print("Part 2:", part2(get_input()))
 
 
-def sum_if_equal(data, step):
-    return sum(x * (x == y) for x, y in get_pairs(data, step))
-
-
-def get_pairs(data, step):
-    k = len(data)
-    for i in range(k):
-        j = (i + step) % k
-        yield data[i], data[j]
-
-
 def part1(data):
     data = [int(x) for x in data]
     return sum_if_equal(data, step=1)
@@ -27,6 +16,17 @@ def part2(data):
     data = [int(x) for x in data]
     assert len(data) % 2 == 0
     return sum_if_equal(data, step=len(data) // 2)
+
+
+def sum_if_equal(data, step):
+    return sum(x * (x == y) for x, y in get_pairs(data, step))
+
+
+def get_pairs(data, step):
+    k = len(data)
+    for i in range(k):
+        j = (i + step) % k
+        yield data[i], data[j]
 
 
 if __name__ == "__main__":

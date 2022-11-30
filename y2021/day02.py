@@ -3,6 +3,11 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
 def part1(puzzle):
     instructions = [x.split() for x in puzzle.splitlines()]
     forward = sum(int(d) for i, d in instructions if i == "forward")
@@ -29,5 +34,4 @@ def part2(puzzle):
 
 
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()

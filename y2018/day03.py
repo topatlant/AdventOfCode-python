@@ -3,6 +3,23 @@ def get_input():
         return f.read()
 
 
+def main():
+    grid, claims = fill_grid(get_input())
+    print("Part 1:", part1(grid))
+    print("Part 2:", part2(grid, claims))
+
+
+def part1(grid):
+    return sum(sum(1 for cell in line if cell > 1) for line in grid)
+
+
+def part2(grid, claims):
+    # find the claim whose complete area is 1 in the grid
+    for id, c in claims.items():
+        if is_non_overlapping(c, grid):
+            return id
+
+
 def fill_grid(puzzle):
     # main calculation
     grid = [[0] * 1000 for _ in range(1000)]
@@ -41,17 +58,6 @@ def square_iterator(x1, x2, y1, y2):
     return ((i, j) for i in range(x1, x2) for j in range(y1, y2))
 
 
-def part1(grid):
-    return sum(sum(1 for cell in line if cell > 1) for line in grid)
-
-
-def part2(grid, claims):
-    # find the claim whose complete area is 1 in the grid
-    for id, c in claims.items():
-        if is_non_overlapping(c, grid):
-            return id
-
-
 def is_non_overlapping(c, grid):
     for i, j in square_iterator(*c):
         if grid[i][j] != 1:
@@ -59,11 +65,5 @@ def is_non_overlapping(c, grid):
     return True
 
 
-def main_method():
-    grid, claims = fill_grid(get_input())
-    print("Part 1:", part1(grid))
-    print("Part 2:", part2(grid, claims))
-
-
 if __name__ == "__main__":
-    main_method()
+    main()

@@ -3,6 +3,11 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
 def part1(puzzle):
     numbers = [i for i in puzzle.splitlines()]
     bitlength = len(numbers[0])
@@ -57,5 +62,4 @@ def filter_least_common_bit(numbers, bit):
 
 
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()

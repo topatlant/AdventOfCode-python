@@ -6,10 +6,20 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
 def part1(puzzle):
     two = sum(any_letter_n_times(x, 2) for x in puzzle.splitlines())
     three = sum(any_letter_n_times(x, 3) for x in puzzle.splitlines())
     return two * three
+
+
+def part2(puzzle):
+    x, y = find_almost_identical_ids(puzzle.splitlines())
+    return get_intersection(x, y)
 
 
 def any_letter_n_times(x, n):
@@ -17,11 +27,6 @@ def any_letter_n_times(x, n):
         if x.count(l) == n:
             return 1
     return 0
-
-
-def part2(puzzle):
-    x, y = find_almost_identical_ids(puzzle.splitlines())
-    return get_intersection(x, y)
 
 
 def differs_by_one_char(x, y):
@@ -42,5 +47,4 @@ def get_intersection(x, y):
 
 
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()

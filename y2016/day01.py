@@ -3,6 +3,25 @@ def get_input():
         return f.read()
 
 
+def main():
+    print("Part 1:", part1(get_input()))
+    print("Part 2:", part2(get_input()))
+
+
+def part1(puzzle):
+    directions = puzzle.split(", ")
+    final_position = walk(directions)[-1]
+    return distance(final_position)
+
+
+def part2(puzzle):
+    directions = puzzle.split(", ")
+    positions = walk(directions)
+    for p in positions:
+        if positions.count(p) > 1:
+            return distance(p)
+
+
 def walk(directions):
     p = []  # list of all positions reached by walking
 
@@ -48,20 +67,5 @@ def distance(p):
     return abs(p[0]) + abs(p[1])
 
 
-def part1(puzzle):
-    directions = puzzle.split(", ")
-    final_position = walk(directions)[-1]
-    return distance(final_position)
-
-
-def part2(puzzle):
-    directions = puzzle.split(", ")
-    positions = walk(directions)
-    for p in positions:
-        if positions.count(p) > 1:
-            return distance(p)
-
-
 if __name__ == "__main__":
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    main()
