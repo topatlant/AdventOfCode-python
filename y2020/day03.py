@@ -7,8 +7,9 @@ def get_input() -> list[str]:
 
 
 def main():
-    print("Part1:", part1(get_input()))
-    print("Part2:", part2(get_input()))
+    puzzle = get_input()
+    print("Part1:", part1(puzzle))
+    print("Part2:", part2(puzzle))
 
 
 def part1(puzzle):
