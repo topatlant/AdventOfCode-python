@@ -40,7 +40,7 @@ def parse(puzzle) -> np.ndarray:
     return grid
 
 
-def traverse(grid: np.ndarray, slope: tuple[int]):
+def traverse(grid: np.ndarray, slope: tuple[int, int]):
     x = y = 0
     while x < grid.shape[0]:
         yield grid[x, y]

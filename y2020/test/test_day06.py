@@ -1,23 +1,20 @@
 from y2020.day06 import *
 
-puzzle = [
-    line.strip()
-    for line in """abc
-          
-          a
-          b
-          c
-          
-          ab
-          ac
-          
-          a
-          a
-          a
-          a
-          
-          b""".splitlines()
-]
+puzzle = """abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b""".splitlines()
 
 
 def test_part1():
