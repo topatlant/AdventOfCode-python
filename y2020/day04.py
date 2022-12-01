@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 import re
+from common import split_by_blanks
 
 
 def get_input():
     with open("inputs/04.txt") as f:
-        return [line.strip() for line in f]
+        return f.readlines()
 
 
 def main():
@@ -99,20 +100,6 @@ class Passport:
 def parse(puzzle) -> list[Passport]:
     passports = split_by_blanks(puzzle)
     return [parse_passport(p) for p in passports]
-
-
-def split_by_blanks(lines: list[str]) -> list[list[str]]:
-    res = []
-
-    try:
-        while lines:
-            index = lines.index("")
-            res.append(lines[:index])
-            lines = lines[index + 1 :]
-    except ValueError:  # last group found
-        res.append(lines)
-
-    return res
 
 
 def parse_passport(p: list[str]) -> Passport:

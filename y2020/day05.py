@@ -1,4 +1,4 @@
-from itertools import tee
+from common import pairwise
 
 
 def get_input():
@@ -38,13 +38,6 @@ def extract_row_col(boarding_pass: str):
     col = col.replace("R", "1")
     col = col.replace("L", "0")
     return int(row, base=2), int(col, base=2)
-
-
-def pairwise(iterable):
-    """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
-    a, b = tee(iterable)
-    next(b, None)
-    return zip(a, b)
 
 
 if __name__ == "__main__":

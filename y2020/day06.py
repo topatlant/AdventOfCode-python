@@ -1,9 +1,9 @@
-from y2020.day04 import split_by_blanks
+from common import split_by_blanks
 
 
 def get_input():
     with open("inputs/06.txt") as f:
-        return [line.strip() for line in f]
+        return f.readlines()
 
 
 def main():

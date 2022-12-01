@@ -36,7 +36,7 @@ def test_split_by_blanks():
         ["hcl:#cfa07d eyr:2025 pid:166559648", "iyr:2011 ecl:brn hgt:59in"],
     ]
 
-    assert split_by_blanks(puzzle) == expected
+    assert list(split_by_blanks(puzzle)) == expected
 
 
 def test_validate_byr():
