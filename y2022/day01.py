@@ -13,19 +13,19 @@ def main():
 
 
 def part1(puzzle):
-    groups = split_by_blanks(puzzle)
-    return max(get_calory_sum(g) for g in groups)
+    elves = split_by_blanks(puzzle)
+    return max(get_calory_sum(elf) for elf in elves)
 
 
 def part2(puzzle):
-    groups = split_by_blanks(puzzle)
-    calories = [get_calory_sum(g) for g in groups]
+    elves = split_by_blanks(puzzle)
+    calories = [get_calory_sum(elf) for elf in elves]
     calories.sort(reverse=True)
     return sum(calories[:3])
 
 
-def get_calory_sum(elve: list[str]) -> int:
-    return sum(int(line) for line in elve)
+def get_calory_sum(elf: list[str]) -> int:
+    return sum(int(line) for line in elf)
 
 
 if __name__ == "__main__":
