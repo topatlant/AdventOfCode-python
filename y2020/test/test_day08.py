@@ -13,3 +13,7 @@ acc +6""".splitlines()
 
 def test_part1():
     assert part1(puzzle) == 5
+
+
+def test_part2():
+    assert part2(puzzle) == 8
