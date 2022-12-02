@@ -2,8 +2,7 @@ from y2022.day02 import *
 
 puzzle = """A Y
 B X
-C Z""".splitlines(
-)
+C Z""".splitlines()
 
 
 def test_part1():
