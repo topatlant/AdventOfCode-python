@@ -35,7 +35,7 @@ def get_col(i: int, initial_state: list[str]) -> list[str]:
     stack = []
 
     for line in initial_state[:-1]:
-        line = line + " " * (40 - len(line))
+        line = line + " " * (40 - len(line))  # padding for shorter lines
         letter = line[1 + i * 4]
         if letter != " ":
             stack.append(letter)

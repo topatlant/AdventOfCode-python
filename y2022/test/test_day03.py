@@ -1,11 +1,14 @@
 from y2022.day03 import *
 
-puzzle = [line.strip() for line in """vJrwpWtwJgWrhcsFMMfFFhFp
+puzzle = [
+    line.strip()
+    for line in """vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw""".splitlines()]
+CrZsJsPPZsGzwwsLwLmpwMDw""".splitlines()
+]
 
 
 def test_part1():
