@@ -3,8 +3,9 @@ def get_input():
 
 
 def main():
-    print("Part 1:", part1(get_input()))
-    print("Part 2:", part2(get_input()))
+    puzzle = get_input()
+    print("Part 1:", part1(puzzle))
+    print("Part 2:", part2(puzzle))
 
 
 def part1(data):
