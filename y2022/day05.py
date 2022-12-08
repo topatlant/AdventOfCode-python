@@ -50,18 +50,27 @@ def top_of_each_stack(stacks: list[list[str]]) -> str:
 
 def perform_action(stacks: list[list[str]], action: str) -> None:
     assert action.startswith("move")
-    _, qty, _, fr, _, to = action.split()
-    for i in range(int(qty)):
-        stacks[int(to) - 1].append(stacks[int(fr) - 1].pop(-1))
+    _, qty, _, _from, _, to = action.split()
+    qty = int(qty)
+    _from = int(_from) - 1
+    to = int(to) - 1
+
+    # move one box at a time
+    for i in range(qty):
+        stacks[to].append(stacks[_from].pop(-1))
     return
 
 
 def perform_action2(stacks: list[list[str]], action: str) -> None:
     assert action.startswith("move")
-    _, qty, _, fr, _, to = action.split()
+    _, qty, _, _from, _, to = action.split()
+    qty = int(qty)
+    _from = int(_from) - 1
+    to = int(to) - 1
 
-    stacks[int(to) - 1].extend(stacks[int(fr) - 1][-int(qty) :])
-    stacks[int(fr) - 1] = stacks[int(fr) - 1][: -int(qty)]
+    # move qty boxes at once
+    stacks[to].extend(stacks[_from][-qty:])
+    stacks[_from] = stacks[_from][: -qty]
     return
 
 

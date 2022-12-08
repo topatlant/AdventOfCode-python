@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 def get_input():
     with open("inputs/03.txt") as f:
         return [line.strip() for line in f.readlines()]
@@ -26,17 +29,27 @@ def get_duplicate_letter(x: str) -> str:
 
 
 def get_letter_in_all(lines: list[str]) -> str:
-    all_letters = set(a for line in lines for a in line)
-    for letter in all_letters:
-        if all(letter in line for line in lines):
+    # Option 1 - check each letter in first line to also be present
+    # in all other lines
+    for letter in lines[0]:
+        if all(letter in line for line in lines[1:]):
             return letter
+
     raise AssertionError("no common letter found")
+
+    # Option 2 - calculate intersection of all sets of letters
+    # there should be only one letter left
+
+    # all_letters = [set(a for a in line) for line in lines]
+    # repeated_letters = reduce(lambda s1, s2: s1.intersection(s2), all_letters)
+    # assert len(repeated_letters) == 1
+    # return repeated_letters.pop()
 
 
 def groups_of_three(lines: list):
     assert len(lines) % 3 == 0
     for i in range(0, len(lines), 3):
-        yield lines[i : i + 3]
+        yield lines[i: i + 3]
 
 
 def priority(letter: str) -> int:
