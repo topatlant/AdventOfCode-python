@@ -49,7 +49,7 @@ def get_letter_in_all(lines: list[str]) -> str:
 def groups_of_three(lines: list):
     assert len(lines) % 3 == 0
     for i in range(0, len(lines), 3):
-        yield lines[i: i + 3]
+        yield lines[i : i + 3]
 
 
 def priority(letter: str) -> int:

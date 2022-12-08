@@ -70,7 +70,7 @@ def perform_action2(stacks: list[list[str]], action: str) -> None:
 
     # move qty boxes at once
     stacks[to].extend(stacks[_from][-qty:])
-    stacks[_from] = stacks[_from][: -qty]
+    stacks[_from] = stacks[_from][:-qty]
     return
 
 

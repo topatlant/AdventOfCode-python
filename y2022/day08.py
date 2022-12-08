@@ -46,11 +46,11 @@ def is_visible(grid: list[list[int]], x: int, y: int) -> bool:
 def get_lines_of_sight(grid: list[list[int]], x: int, y: int) -> list[list[int]]:
     # horizontal left and right, cut out position x
     row = grid[y]
-    res = [row[x - 1:: -1], row[x + 1:]]
+    res = [row[x - 1 :: -1], row[x + 1 :]]
 
     # vertical up and down, cut out position y
     col = [line[x] for line in grid]
-    res += [col[y - 1:: -1], col[y + 1:]]
+    res += [col[y - 1 :: -1], col[y + 1 :]]
 
     return res
 
