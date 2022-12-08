@@ -10,3 +10,8 @@ def test_part1():
 
 def test_part2():
     assert part2(800) == 806
+
+
+def test_walk_in_spiral():
+    assert walk_in_spiral(1) == ""
+    assert walk_in_spiral(4) == "rul"

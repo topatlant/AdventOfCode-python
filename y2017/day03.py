@@ -29,15 +29,15 @@ def part2(threshold: int) -> int:
 def get_coords(n: int) -> tuple[int, int]:
     # I did not bother to rewrite the solution of part1
     # with the iterator from part2, because I like it so much ;)
-    directions = walk_in_spiral(n)[: n - 1]
+    directions = walk_in_spiral(n)
     x = directions.count("r") - directions.count("l")
     y = directions.count("u") - directions.count("d")
     return x, y
 
 
 def walk_in_spiral(n: int) -> str:
-    """get a string of directions that is at least as long (or longer than needed)
-    to take you to the n-th position"""
+    """get a string of directions that takes you to the n-th position
+    (starting from the origin == 1)"""
     k = 1
     res = ""
     while len(res) < n - 1:
@@ -47,7 +47,7 @@ def walk_in_spiral(n: int) -> str:
         res += "l" * k  # left
         res += "d" * k  # down
         k += 1
-    return res
+    return res[: n - 1]
 
 
 def spiral_iterator():
