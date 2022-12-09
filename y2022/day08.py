@@ -1,3 +1,6 @@
+from common.itertools import take_until_first
+
+
 def get_input():
     with open("inputs/08.txt") as f:
         return f.readlines()
@@ -73,14 +76,6 @@ def get_scenic_score(grid: list[list[int]], x: int, y: int) -> int:
         scenic_score *= viewing_distance
 
     return scenic_score
-
-
-def take_until_first(predicate, iterable):
-    """take up to and including the first element where predicate becomes true"""
-    for x in iterable:
-        yield x
-        if predicate(x):
-            break
 
 
 if __name__ == "__main__":

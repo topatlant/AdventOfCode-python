@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from common import sign
+
 
 def get_input():
     with open("inputs/09.txt") as f:
@@ -75,10 +77,6 @@ def move_tail(leader: Position, follower: Position) -> Position:
         follower.x + sign(leader.x - follower.x),
         follower.y + sign(leader.y - follower.y),
     )
-
-
-def sign(a):
-    return 0 if a == 0 else (1 if a > 0 else -1)
 
 
 if __name__ == "__main__":

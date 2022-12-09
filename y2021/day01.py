@@ -1,4 +1,4 @@
-from common import pairwise, triplewise
+from common.itertools import pairwise, triplewise
 
 
 def get_input():
