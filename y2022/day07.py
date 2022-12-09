@@ -48,29 +48,18 @@ class File:
 
 
 class Directory:
-    def __init__(self, name: str):
+    def __init__(self, name: str, files: list[File]):
         self.name = name
-        self.files = []
+        self.files = files
         self.subdirs = []
 
     @staticmethod
     def from_ls_output(name: str, ls: list[str]) -> "Directory":
-        files = []
-        subdirs = []
-        for line in ls:
-            if line.startswith("dir"):
-                subdirs.append(line.split()[1])
-            else:
-                files.append(File.from_line(line))
-        d = Directory(name)
-        d.files = files
-        d.subdirs = subdirs
-        return d
+        files = [File.from_line(line) for line in ls if not line.startswith("dir")]
+        # we do not track subdirs here, they will be added at the "ls" command
+        return Directory(name, files)
 
     def add_subdir(self, sd: "Directory"):
-        """replace string placeholder with Directory object"""
-        if sd.name in self.subdirs:
-            self.subdirs.remove(sd.name)
         self.subdirs.append(sd)
 
     def get_total_size(self) -> int:
@@ -82,22 +71,28 @@ class Directory:
 def populate_dirs(puzzle: list[str]) -> dict[str, Directory]:
     all_dirs = {}
     cur_dir = PurePath("/")
+
     commands = split_by_dollars(puzzle)
-    # assert commands[0]=="$ cd /"
+
     for command, output in commands:
+
         if command.startswith("$ cd"):
             if command == "$ cd ..":
                 cur_dir = cur_dir.parent
             else:
                 cur_dir = cur_dir / (command.split()[-1])
+
         elif command.startswith("$ ls"):
             d = Directory.from_ls_output(cur_dir.name, output)
             all_dirs[str(cur_dir)] = d
+
             if cur_dir != PurePath("/"):
                 # don't add root path to itself
                 all_dirs[str(cur_dir.parent)].add_subdir(d)
+
         else:
             raise ValueError("Invalid terminal command")
+
     return all_dirs
 
 
