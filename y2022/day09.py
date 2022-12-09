@@ -30,7 +30,7 @@ def part2(puzzle, chain_length=10) -> int:
     return len(visited)
 
 
-@dataclass()
+@dataclass
 class Position:
     x: int
     y: int
@@ -45,14 +45,14 @@ def step(direction: str, knots: list[Position]) -> list[Position]:
     return knots
 
 
-def move_head(direction, head: Position):
+def move_head(direction: str, head: Position) -> Position:
     if direction == "U":
         return Position(head.x, head.y + 1)
-    elif direction == "D":
+    if direction == "D":
         return Position(head.x, head.y - 1)
-    elif direction == "L":
+    if direction == "L":
         return Position(head.x - 1, head.y)
-    elif direction == "R":
+    if direction == "R":
         return Position(head.x + 1, head.y)
     raise ValueError("incorrect direction")
 
@@ -71,7 +71,10 @@ def move_tail(leader: Position, follower: Position) -> Position:
         return Position(follower.x, follower.y + sign(leader.y - follower.y))
 
     # move diagonally
-    return Position(follower.x + sign(leader.x - follower.x), follower.y + sign(leader.y - follower.y))
+    return Position(
+        follower.x + sign(leader.x - follower.x),
+        follower.y + sign(leader.y - follower.y),
+    )
 
 
 def sign(a):
