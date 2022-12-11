@@ -20,8 +20,8 @@ def part1(puzzle):
 def part2(puzzle):
     elves = split_by_blanks(puzzle)
     calories = [get_calory_sum(elf) for elf in elves]
-    calories.sort(reverse=True)
-    return sum(calories[:3])
+    calories.sort()
+    return sum(calories[-3:])
 
 
 def get_calory_sum(elf: list[str]) -> int:
