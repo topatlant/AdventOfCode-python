@@ -35,8 +35,8 @@ def part1(puzzle, pt2=False) -> int:
 
     heights, start, target = parse(puzzle)
     start, target = target, start  # search from target to start
-    path = np.zeros_like(heights, "i")
-    already_seen = {}
+    path = np.zeros_like(heights)
+    already_seen = np.full_like(heights, fill_value=10000)
 
     min_steps = step(heights, path, already_seen, current=start, target=target, pt2=pt2)
 
@@ -84,7 +84,7 @@ def find_and_replace_position(
 def step(
     heights: np.array,
     path: np.array,
-    already_seen: dict[tuple[int, int], int],
+    already_seen: np.array,
     current: tuple[int, int],
     target: tuple[int, int],
     pt2: bool,
@@ -95,6 +95,14 @@ def step(
     n_steps = path.max()
     path[current] = n_steps + 1
 
+    # stop if we already know a better path to here - or else update knowledge.
+    # Additionally stop if we are about to exceed the default recursion depth of Python ;)
+    # don't worry - there exist solutions smaller than this
+    if n_steps > MAX_DEPTH or n_steps > MIN_SO_FAR or already_seen[current] <= n_steps:
+        return False
+
+    already_seen[current] = n_steps
+
     # did we finish?
     if current == target or (pt2 and heights[current] == 1):
         if n_steps < MIN_SO_FAR:
@@ -104,22 +112,10 @@ def step(
             MIN_SO_FAR = n_steps
         return n_steps
 
-    # stop if we already know a better path to here - or else update knowledge.
-    # Additionally stop if we are about to exceed the default recursion depth of Python ;)
-    # don't worry - there exist solutions smaller than this
-    if (
-        n_steps > MAX_DEPTH
-        or n_steps > MIN_SO_FAR
-        or (current in already_seen and already_seen[current] <= n_steps)
-    ):
-        return False
-
-    already_seen[current] = n_steps
-
     # check all options from here, starting with steps that bring us closer to target
     n_steps_children = []
     next_to_check = sorted(
-        allowed_positions(heights, path, current),
+        allowed_positions(heights, current),
         key=lambda p: manhattan_distance(p, target),
     )
     for next_position in next_to_check:
@@ -140,22 +136,18 @@ def manhattan_distance(p1: tuple[int, int], p2: tuple[int, int]) -> int:
 
 
 def allowed_positions(
-    heights: np.array, visited: np.array, current: tuple[int, int]
+    heights: np.array, current: tuple[int, int]
 ) -> Iterator[tuple[int, int]]:
     def check_height(p):
         # cannot *descend* more than one height per step since we are searching in opposite direction
         return heights[p] >= heights[current] - 1
-
-    def check_circular(p):
-        # do not visit the same spot twice
-        return not visited[p]
 
     def check_boundary(p):
         # do not leave grid
         return 0 <= p[0] < heights.shape[0] and 0 <= p[1] < heights.shape[1]
 
     for new in neighbours(current):
-        if check_boundary(new) and check_circular(new) and check_height(new):
+        if check_boundary(new) and check_height(new):
             yield new
 
 
