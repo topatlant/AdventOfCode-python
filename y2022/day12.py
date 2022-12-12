@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Union, Iterator, Optional
 
-MIN_SO_FAR = 10000  # just for printing
+MIN_SO_FAR: int  # just for printing
 
 
 # Yes, I know this is not optimal - I thought about doing the full A*
@@ -18,16 +18,43 @@ def get_input():
 def main():
     puzzle = get_input()
     print("Part 1:", part1(puzzle))
-    # print("Part 2:", part2(instructions))
+    puzzle = (
+        get_input()
+    )  # we have to get the input again, since my clever algorithm is destroying it :P
+    print("Part 2:", part2(puzzle))
 
 
 def part1(puzzle) -> int:
+    global MIN_SO_FAR
+    MIN_SO_FAR = 10000
+
     heights, start, target = parse(puzzle)
 
     path = np.zeros_like(heights, "i")
     already_seen = {}
 
     min_steps = step(heights, path, already_seen, current=start, target=target)
+
+    print("done!")
+    return min_steps
+
+
+def part2(puzzle) -> int:
+    global MIN_SO_FAR
+    MIN_SO_FAR = 10000
+
+    # ok, let's turn this around
+    # find the shortest path from E to any square of height a
+    # but only descend max one step at a time
+    heights, start, target = parse(puzzle)
+    start, target = target, start  # hehe
+
+    path = np.zeros_like(heights, "i")
+    already_seen = {}
+
+    min_steps = step(
+        heights, path, already_seen, current=start, target=target, pt2=True
+    )
 
     print("done!")
     return min_steps
@@ -70,25 +97,26 @@ def step(
     already_seen: dict[tuple[int, int], int],
     current: tuple[int, int],
     target: tuple[int, int],
+    pt2=False,
 ) -> Union[int, bool]:
     global MIN_SO_FAR
 
-    n_steps = final_number_of_steps(path)
+    n_steps = number_of_steps(path)
 
     # remember the path that brought us here
     path[current] = path.max() + 1
 
     # did we finish?
-    if current == target:
+    if current == target or (pt2 and heights[current] == 1):
         if n_steps < MIN_SO_FAR:
             print(f"Found a path with {n_steps} steps!")
             # print(visualize_path(path))
             MIN_SO_FAR = n_steps
         return n_steps
 
-    # stop if we already know a better path to here - or update knowledge
-    # or stop if we are about to exceed the default recursion depth of Python ;)
-    # since there exist solutions smaller than this
+    # stop if we already know a better path to here - or else update knowledge.
+    # Additionally stop if we are about to exceed the default recursion depth of Python ;)
+    # don't worry - there exist solutions smaller than this
     if n_steps > 800 or (current in already_seen and already_seen[current] <= n_steps):
         return False
     else:
@@ -97,13 +125,15 @@ def step(
     # check all options from here
     n_steps = []
     next_to_check = sorted(
-        allowed_positions(heights, path, current),
+        allowed_positions(heights, path, current, pt2),
         key=lambda p: manhattan_distance(p, target),
     )
     for next_position in next_to_check:
         # check directions closer to target first
         # we have to branch (copy the visited path) to be able to do recursion/backtracking/different pathes
-        n_steps.append(step(heights, path.copy(), already_seen, next_position, target))
+        n_steps.append(
+            step(heights, path.copy(), already_seen, next_position, target, pt2)
+        )
 
     if n_steps == [] or all(x is False for x in n_steps):
         # no route to target from here
@@ -117,11 +147,15 @@ def manhattan_distance(p1: tuple[int, int], p2: tuple[int, int]) -> int:
 
 
 def allowed_positions(
-    heights: np.array, visited: np.array, current: tuple[int, int]
+    heights: np.array, visited: np.array, current: tuple[int, int], pt2: bool
 ) -> Iterator[tuple[int, int]]:
     def check_height(p):
         # cannot climb more than one height per step
-        return heights[p] <= heights[current] + 1
+        # or in pt2 descend more than one, since we reversed the search
+        if pt2:
+            return heights[p] >= heights[current] - 1
+        else:
+            return heights[p] <= heights[current] + 1
 
     def check_circular(p):
         # do not visit the same spot twice
@@ -141,7 +175,7 @@ def allowed_positions(
             yield new
 
 
-def final_number_of_steps(visited: np.array) -> int:
+def number_of_steps(visited: np.array) -> int:
     return visited.max()
 
 
