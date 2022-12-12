@@ -1,7 +1,13 @@
 import numpy as np
 from typing import Union, Iterator, Optional
 
-MIN_SO_FAR = 10000
+MIN_SO_FAR = 10000  # just for printing
+
+
+# Yes, I know this is not optimal - I thought about doing the full A*
+# but this is also quick enough to do the job ;)
+# does depth-first recursion with manhattan-distance to target as the priority metrics
+# and remembers visited points with shortest known path until then
 
 
 def get_input():
@@ -16,16 +22,11 @@ def main():
 
 
 def part1(puzzle) -> int:
-    # it
     heights, start, target = parse(puzzle)
 
     path = np.zeros_like(heights, "i")
-    # to_do = {start:0}
-    # final = set()
     already_seen = {}
 
-    # A*
-    # min_steps = search(heights, path, target, to_do, final)
     min_steps = step(heights, path, already_seen, current=start, target=target)
 
     print("done!")
@@ -63,33 +64,6 @@ def find_and_replace_position(
     return puzzle, loc
 
 
-#
-# def search(heights, path, target, to_do:dict[tuple[int,int],int], final)->Optional[int]:
-#     while to_do:
-#         current = min(to_do, key=to_do.get)
-#         f = to_do.pop(current)
-#
-#         if current == target:
-#             #
-#             #n_steps = final_number_of_steps(path)
-#             #if n_steps < MIN_SO_FAR:
-#             #    print(f"Found a path with {n_steps} steps!")
-#             #    print(visualize_path(visited))
-#             #    MIN_SO_FAR = n_steps
-#             return
-#             #return n_steps
-#
-#         final.add(current)
-#         expand(current, heights, path, target, to_do, final)
-#
-#     return None
-#
-# def expand(current, heights, path, target, to_do, final):
-#     for next_position in allowed_positions(heights, path, current):
-#         if next_position in final:
-#             continue
-
-
 def step(
     heights: np.array,
     path: np.array,
@@ -114,7 +88,7 @@ def step(
 
     # stop if we already know a better path to here - or update knowledge
     # or stop if we are about to exceed the default recursion depth of Python ;)
-    # since there are solutions smaller than this
+    # since there exist solutions smaller than this
     if n_steps > 800 or (current in already_seen and already_seen[current] <= n_steps):
         return False
     else:
@@ -136,20 +110,6 @@ def step(
         return False
 
     return min(n for n in n_steps if n is not False)
-
-
-#
-# def tobi_weight(current, new, target, heights):
-#     # Ok, I see it's not working by just moving towards the target.
-#     # Let's disfavour descending and try moving upwards (or level) first before trying to descend...
-#     w1 = manhattan_distance(new, target)
-#     w2 = 200 * h(heights[current] - heights[new])
-#     return w1
-#
-#
-# def h(x: int) -> int:
-#     """tweaked Heaviside function"""
-#     return 0 if x < 0 else (x + 1)
 
 
 def manhattan_distance(p1: tuple[int, int], p2: tuple[int, int]) -> int:
@@ -183,10 +143,6 @@ def allowed_positions(
 
 def final_number_of_steps(visited: np.array) -> int:
     return visited.max()
-
-
-# def visualize_path(visited: np.array) -> str:
-#    return str(visited)
 
 
 if __name__ == "__main__":
