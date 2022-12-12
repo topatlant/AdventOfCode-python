@@ -50,6 +50,7 @@ def part2(puzzle) -> int:
 
 def parse(puzzle: list[str]) -> tuple[np.array, tuple[int, int], tuple[int, int]]:
     """parse the puzzle destructively, i.e. replace start with "a" and target with "z" """
+
     def get_height(char: str):
         return ord(char) - 96
 
@@ -153,15 +154,23 @@ def allowed_positions(
         # do not leave grid
         return 0 <= p[0] < heights.shape[0] and 0 <= p[1] < heights.shape[1]
 
+    for new in neighbours(current):
+        if check_boundary(new) and check_circular(new) and check_height(new):
+            yield new
+
+
+def neighbours(current):
     for delta in (-1, 1):
-        # vertical step
-        new = current[0] + delta, current[1]
-        if check_boundary(new) and check_circular(new) and check_height(new):
-            yield new
-        # horizontal step
-        new = current[0], current[1] + delta
-        if check_boundary(new) and check_circular(new) and check_height(new):
-            yield new
+        yield current[0] + delta, current[1]
+        yield current[0], current[1] + delta
+
+    # if you want to allow diagonal steps:
+    # yield from [
+    #     (current[0] + dx, current[1] + dy)
+    #     for dx in (-1, 0, 1)
+    #     for dy in (-1, 0, 1)
+    #     if not (dx == 0 and dy == 0)
+    # ]
 
 
 def visualize_path(path: np.array):
