@@ -30,13 +30,13 @@ I_DRAW = "Y"
 I_WIN = "Z"
 
 
-def get_score_part1(round: str):
-    u_play, i_play = round.split()
+def get_score_part1(round_: str):
+    u_play, i_play = round_.split()
     return get_score(i_play, u_play)
 
 
-def get_score_part2(round: str) -> int:
-    u_play, result = round.split()
+def get_score_part2(round_: str) -> int:
+    u_play, result = round_.split()
     i_play = get_my_shape(u_play, result)
     return get_score(i_play, u_play)
 
