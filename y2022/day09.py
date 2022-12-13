@@ -25,7 +25,7 @@ def part2(puzzle, chain_length=10) -> int:
     for instruction in puzzle:
         direction, qty = instruction.split()
 
-        for i in range(int(qty)):
+        for _ in range(int(qty)):
             knots = step(direction, knots)
             visited.add((knots[-1].x, knots[-1].y))
 

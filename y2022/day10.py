@@ -12,7 +12,7 @@ def main():
 
 def part1(puzzle: list[str]) -> int:
     values_during = execute_instructions(puzzle)
-    return extract_interesting_signal_strenghts(values_during)
+    return extract_interesting_signal_strengths(values_during)
 
 
 def part2(puzzle: list[str]) -> str:
@@ -45,7 +45,7 @@ def execute_instructions(puzzle: list[str]) -> list[int]:
     return values_during
 
 
-def extract_interesting_signal_strenghts(values_during: list[int]) -> int:
+def extract_interesting_signal_strengths(values_during: list[int]) -> int:
     return sum(
         cycle * value_x_during_cycle(cycle, values_during)
         for cycle in range(20, 221, 40)

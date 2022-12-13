@@ -30,7 +30,7 @@ def part2(puzzle, rounds=10000, pt1=False) -> int:
         kgv = reduce(lambda x, y: x * y, [m.division for m in all_monkeys])
         Operation.init_lcm(kgv)
 
-    for rd in range(rounds):
+    for _ in range(rounds):
         one_round(all_monkeys)
 
     inspections = [m.n_inspected for m in all_monkeys]

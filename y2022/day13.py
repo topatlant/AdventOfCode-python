@@ -3,6 +3,7 @@ from functools import cmp_to_key
 from itertools import zip_longest
 import ast
 
+
 # import json
 
 
@@ -23,7 +24,7 @@ def part1(puzzle) -> int:
         for i, ordered in enumerate(
             is_ordered(group) for group in split_by_blanks(puzzle)
         )
-        if ordered == -1
+        if ordered
     ]
     return sum(indices)
 
@@ -37,10 +38,10 @@ def part2(puzzle) -> int:
     return (index1 + 1) * (index2 + 1)
 
 
-def is_ordered(group: list[str]) -> int:
+def is_ordered(group: list[str]) -> bool:
     assert len(group) == 2
     one, two = (parse(line) for line in group)
-    return compare(one, two)
+    return compare(one, two) == -1
 
 
 def parse(line: str):
