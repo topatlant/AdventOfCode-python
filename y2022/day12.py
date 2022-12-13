@@ -107,8 +107,8 @@ def step(
     if current == target or (pt2 and heights[current] == 1):
         if n_steps < MIN_SO_FAR:
             # os.system("cls")  # for Windows systems
-            print(f"Found a path with {n_steps} steps!")
             # print(visualize_path(path))
+            print(f"Found a path with {n_steps} steps!")
             MIN_SO_FAR = n_steps
         return n_steps
 
