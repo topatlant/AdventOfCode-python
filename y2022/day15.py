@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Iterator
 import re
-from itertools import tee, count
 
 
 def get_input():
@@ -40,37 +39,6 @@ def part2(puzzle, limit=4000000):
 
 
 coordinates = tuple[int, int]
-
-
-@dataclass
-class Interval:
-    start: int
-    end: int
-
-
-def pairwise_indexed(iterable):
-    """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
-    a, b = tee(iterable)
-    next(b, None)
-    return zip(count(), a, b)
-
-
-def merge_intervals(intervals: list[Interval]) -> list[Interval]:
-    """intervals need to be sorted!"""
-    if len(intervals) < 2:
-        return intervals
-
-    for index, i1, i2 in pairwise_indexed(intervals):
-
-        if not (i1.end < i2.start - 1 or i2.end < i1.start - 1):
-            # can be merged
-            merged = Interval(min(i1.start, i2.start), max(i1.end, i2.end))
-            return merge_intervals(
-                intervals[:index] + [merged] + intervals[index + 2 :]
-            )
-
-    # fallthrough means no mergeable intervals found
-    return intervals
 
 
 @dataclass
