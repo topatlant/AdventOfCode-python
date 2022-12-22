@@ -23,12 +23,11 @@ def part1(puzzle) -> int:
 
 
 def part2(puzzle, rounds=10000, pt1=False) -> int:
-    all_monkeys = parse(puzzle, divide_by_three=pt1)
+    all_monkeys = parse(puzzle)
 
+    Monkey.part1 = pt1
     if not pt1:
-        # enable modulo arithmetics
-        kgv = reduce(lambda x, y: x * y, [m.division for m in all_monkeys])
-        Operation.init_lcm(kgv)
+        Monkey.lcm = reduce(lambda x, y: x * y, [m.division for m in all_monkeys])
 
     for _ in range(rounds):
         one_round(all_monkeys)
@@ -39,25 +38,25 @@ def part2(puzzle, rounds=10000, pt1=False) -> int:
 
 
 class Monkey:
+    part1: bool
+    lcm: int = None  # least common multiple
+
     def __init__(
         self,
         starting_items: deque[int],
         operation,
         division_test: int,
         monkey_to_throw: tuple[int, int],
-        divide_by_three: bool = False,
     ):
         self.inventory = starting_items
         self.operation = operation
         self.division = division_test
-        self.monkey_true = monkey_to_throw[0]
-        self.monkey_false = monkey_to_throw[1]
-        self.divide_by_three = divide_by_three
+        self.target_ids = {True: monkey_to_throw[0], False: monkey_to_throw[1]}
 
         self.n_inspected = 0
 
     @staticmethod
-    def from_definition(puzzle: list[str], divide_by_three=False) -> "Monkey":
+    def from_definition(puzzle: list[str]) -> "Monkey":
         assert puzzle[0].startswith("Monkey ")
         assert puzzle[1].startswith("Starting items:")
         items = deque([int(x) for x in puzzle[1].split(":")[-1].split(",")])
@@ -69,9 +68,7 @@ class Monkey:
         monkey_true = int(puzzle[4].split()[-1])
         assert puzzle[5].startswith("If false: throw to monkey")
         monkey_false = int(puzzle[5].split()[-1])
-        return Monkey(
-            items, operation, divisible, (monkey_true, monkey_false), divide_by_three
-        )
+        return Monkey(items, operation, divisible, (monkey_true, monkey_false))
 
     def take_turn(self, all_monkeys: list["Monkey"]) -> None:
         while self.inventory:
@@ -80,13 +77,13 @@ class Monkey:
     def inspect_and_throw(self, item: int, all_monkeys) -> None:
         worry_level = self.operation.apply(item)
 
-        if self.divide_by_three:
+        if Monkey.part1:
             worry_level = worry_level // 3
-
-        if worry_level % self.division == 0:
-            all_monkeys[self.monkey_true].catch(worry_level)
         else:
-            all_monkeys[self.monkey_false].catch(worry_level)
+            worry_level = worry_level % Monkey.lcm
+
+        other_monkey = all_monkeys[self.target_ids[worry_level % self.division == 0]]
+        other_monkey.catch(worry_level)
 
         self.n_inspected += 1
 
@@ -95,8 +92,6 @@ class Monkey:
 
 
 class Operation:
-    lcm: int = None
-
     @staticmethod
     def parse(line: str) -> "Operation":
         if line.startswith("old +"):
@@ -107,21 +102,13 @@ class Operation:
             return Multiplication(int(line.split("*")[-1]))
         raise ValueError("unrecognized Monkey Operation")
 
-    @classmethod
-    def init_lcm(cls, common_divisor: int):
-        """enable modulo arithmetics"""
-        cls.lcm = common_divisor
-
 
 class Addition(Operation):
     def __init__(self, n: int):
         self.n = n
 
     def apply(self, item: int):
-        if Operation.lcm:
-            return (self.n + item) % Operation.lcm
-        else:
-            return self.n + item
+        return self.n + item
 
 
 class Multiplication(Operation):
@@ -129,18 +116,12 @@ class Multiplication(Operation):
         self.n = n
 
     def apply(self, item: int) -> int:
-        if Operation.lcm:
-            return (self.n * item) % Operation.lcm
-        else:
-            return self.n * item
+        return self.n * item
 
 
 class Square(Operation):
     def apply(self, item: int) -> int:
-        if Operation.lcm:
-            return (item * item) % Operation.lcm
-        else:
-            return item * item
+        return item * item
 
 
 def one_round(monkeys: list[Monkey]) -> None:
@@ -148,11 +129,8 @@ def one_round(monkeys: list[Monkey]) -> None:
         m.take_turn(monkeys)
 
 
-def parse(puzzle: list[str], divide_by_three: bool) -> list[Monkey]:
-    return [
-        Monkey.from_definition(lines, divide_by_three)
-        for lines in split_by_blanks(puzzle)
-    ]
+def parse(puzzle: list[str]) -> list[Monkey]:
+    return [Monkey.from_definition(lines) for lines in split_by_blanks(puzzle)]
 
 
 if __name__ == "__main__":

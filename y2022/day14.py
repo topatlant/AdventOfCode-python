@@ -16,14 +16,10 @@ def main():
 
 
 def part1(puzzle) -> int:
-    return part1_and_2(puzzle, pt2=False)
+    return part2(puzzle, pt2=False)
 
 
-def part2(puzzle) -> int:
-    return part1_and_2(puzzle, pt2=True)
-
-
-def part1_and_2(puzzle, pt2: bool) -> int:
+def part2(puzzle, pt2=True) -> int:
     all_rocks = parse(puzzle)
 
     y_floor = max(p[1] for p in all_rocks) + 2
