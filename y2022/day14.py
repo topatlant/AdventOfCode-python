@@ -16,22 +16,14 @@ def main():
 
 
 def part1(puzzle) -> int:
-    all_rocks = parse(puzzle)
-
-    y_floor = max(p[1] for p in all_rocks) + 2
-
-    grid = np.zeros([2000, y_floor], "?")
-    for p in all_rocks:
-        grid[p] = True
-
-    n_sand = 0
-    while does_sand_come_to_rest(grid, y_floor):
-        n_sand += 1
-
-    return n_sand
+    return part1_and_2(puzzle, pt2=False)
 
 
 def part2(puzzle) -> int:
+    return part1_and_2(puzzle, pt2=True)
+
+
+def part1_and_2(puzzle, pt2: bool) -> int:
     all_rocks = parse(puzzle)
 
     y_floor = max(p[1] for p in all_rocks) + 2
@@ -41,19 +33,10 @@ def part2(puzzle) -> int:
         grid[p] = True
 
     n_sand = 0
-    while not sand_reaches_source(grid, y_floor):
+    while drop_sand(grid, y_floor, pt2=pt2):
         n_sand += 1
 
     return n_sand
-
-
-def parse(puzzle) -> list[tuple[int, int]]:
-    all_rocks = [
-        rock
-        for line_of_rock in get_lines_from_puzzle(puzzle)
-        for rock in get_points(line_of_rock)
-    ]
-    return all_rocks
 
 
 coordinates = tuple[int, int]
@@ -63,6 +46,15 @@ coordinates = tuple[int, int]
 class StraightLine:
     start: coordinates
     end: coordinates
+
+
+def parse(puzzle) -> list[coordinates]:
+    all_rocks = [
+        rock
+        for line_of_rock in get_lines_from_puzzle(puzzle)
+        for rock in get_points(line_of_rock)
+    ]
+    return all_rocks
 
 
 def get_lines_from_puzzle(puzzle: list[str]) -> Iterator[StraightLine]:
@@ -88,43 +80,19 @@ def get_points(line: StraightLine) -> Iterator[coordinates]:
         yield from [(x, y1) for x in range(a, b + 1)]
 
 
-def does_sand_come_to_rest(grid: np.array, y_floor: int) -> bool:
+def drop_sand(grid: np.array, y_floor: int, pt2: bool) -> bool:
+    """:return: whether to continue dropping sand"""
+
     x, y = 500, 0
 
-    while y < y_floor - 1:
-        if not grid[x, y + 1]:
-            # step down
-            y += 1
-            continue
-
-        if not grid[x - 1, y + 1]:
-            # down left
-            x -= 1
-            y += 1
-            continue
-
-        if not grid[x + 1, y + 1]:
-            # down right
-            x += 1
-            y += 1
-            continue
-
-        # stay and settle
-        grid[x, y] = True
-        return True
-
-    return False
-
-
-def sand_reaches_source(grid: np.array, y_floor: int) -> bool:
-    x, y = 500, 0
     if grid[x, y]:
-        return True
+        return False  # reaching the source
 
     while True:
+
         if y + 1 == y_floor:
             grid[x, y] = True
-            return False
+            return pt2  # in pt1 we stop when reaching the floor
 
         if not grid[x, y + 1]:
             # step down
@@ -145,7 +113,7 @@ def sand_reaches_source(grid: np.array, y_floor: int) -> bool:
 
         # stay and settle
         grid[x, y] = True
-        return False
+        return True
 
 
 if __name__ == "__main__":
