@@ -34,7 +34,6 @@ def part2(puzzle, rounds=10000, pt1=False) -> int:
         one_round(all_monkeys)
 
     inspections = [m.n_inspected for m in all_monkeys]
-    print(inspections)
     inspections.sort()
     return inspections[-1] * inspections[-2]
 
