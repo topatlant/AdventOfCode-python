@@ -29,16 +29,18 @@ def digits(line: str) -> list[int]:
 
 
 def to_digits(line: str) -> list[int]:
-    return list(digits_in(line))
+    tokens = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    return list(digits_in(line, tokens))
 
 
 def to_digits_from_right(line: str) -> list[int]:
-    return list(digits_from_right_in(line))
-
-
-def digits_in(line: str) -> Iterator[int]:
+    # just reverse every string and check from left, as usual
     tokens = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    tokens_reversed = [t[::-1] for t in tokens]
+    return list(digits_in(line[::-1], tokens_reversed))
 
+
+def digits_in(line: str, tokens: list[str]) -> Iterator[int]:
     while line:
 
         if line[0].isdigit():
@@ -54,26 +56,6 @@ def digits_in(line: str) -> Iterator[int]:
         else:
             # string starts with neither of the numbers
             line = line[1:]
-
-
-def digits_from_right_in(line) -> Iterator[int]:
-    tokens = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-    while line:
-
-        if line[-1].isdigit():
-            yield int(line[-1])
-            line = line[:-1]
-            continue
-
-        for n in tokens:
-            if line.endswith(n):
-                yield tokens.index(n) + 1
-                line = line[: -len(n)]
-                break
-        else:
-            # string ends with neither of the numbers
-            line = line[:-1]
 
 
 if __name__ == "__main__":
